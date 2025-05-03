@@ -77,13 +77,18 @@ Maven
 
 Getting Started
 1.Clone the repository:
-
+```bash
 git clone https://github.com/BitanGuhaRoy/authorizationserver.git
+
 cd authorizationserver
+```
 
 2. Update database configs in application.properties.
 
-3. Run the application :: ./mvnw spring-boot:run
+3. Run the application ::
+```
+./mvnw spring-boot:run
+```
 
 
 
