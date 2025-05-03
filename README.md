@@ -28,13 +28,17 @@ This project is a custom **Authorization Server** built using **Spring Authoriza
 1. **Sign up** a user:
 
   API:
-   auth/signup
+  
+   POST: <server>/auth/signup
+   
   Payload:
+  ```json
     {
     "email": "bitan",
     "password": "password",
     "username": "Bits"
   }
+```
 
 3. **JWT Payload Example**:
 ```json
