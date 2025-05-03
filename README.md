@@ -6,18 +6,18 @@ This project is a custom **Authorization Server** built using **Spring Authoriza
 
 ## 🚀 Features
 
-- ✅ JWT-based Authentication**
+- ✅ **JWT-based Authentication**
   - Users receive a signed JWT after successful login.
   - JWT payload includes custom claims and roles.
-- 🔐 Spring Security Integration**
+- 🔐 **Spring Security Integration**
   - CSRF protection disabled for Postman testing.
-- 🧾 User Management
+- 🧾 **User Management**
   - Signup and login endpoints available.
   - Credentials stored securely in the database.
-- 🛠️Custom Claims Support
+- 🛠️**Custom Claims Support**
   - Add custom fields (e.g., mobile number, user ID) to the JWT.
   - Roles and user details included in the token claims.
-- 🧩 Role-based Authorization**
+- 🧩 **Role-based Authorization**
   - Assign roles like `ADMIN`, `USER`, etc.
   - Roles automatically embedded in the JWT claims.
 
