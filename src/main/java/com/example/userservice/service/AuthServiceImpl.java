@@ -10,6 +10,7 @@ import com.example.userservice.model.User;
 import com.example.userservice.repository.SessionRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.security.services.JwtTokenService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtTokenService jwtTokenService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     private final SecretKey key = Jwts.SIG.HS256.key().build();
 
@@ -46,6 +50,13 @@ public class AuthServiceImpl implements AuthService {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setPassword(bCryptPasswordEncoder.encode(password));
+            // send a welcome message
+//            SendEmailDto sendEmailDto = new SendEmailDto();
+//            sendEmailDto.setEmail("Thanks for signing up");
+//            sendEmailDto.setSubject("Welcome to Platform->");
+//            sendEmailDto.setTo(email);
+//            sendEmailDto.setFrom("r.bitan");
+//            kafkaProducerClient.sendMessage("send_email", objectMapper.writeValueAsString(sendEmailDto));
             userRepository.save(newUser);
             return newUser;
         }
