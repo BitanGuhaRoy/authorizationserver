@@ -1,5 +1,7 @@
 package com.example.userservice.service;
 
+import com.example.userservice.configs.KafkaProducerClient;
+import com.example.userservice.dto.SendEmailDto;
 import com.example.userservice.exceptions.InvalidCredentialException;
 import com.example.userservice.exceptions.UserAlreadyExistsException;
 import com.example.userservice.exceptions.UserNotFoundException;
@@ -11,6 +13,7 @@ import com.example.userservice.repository.SessionRepository;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.security.services.JwtTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.converters.Auto;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,6 +40,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private KafkaProducerClient kafkaProducerClient;
+
 
     private final SecretKey key = Jwts.SIG.HS256.key().build();
 
@@ -51,12 +57,14 @@ public class AuthServiceImpl implements AuthService {
             newUser.setEmail(email);
             newUser.setPassword(bCryptPasswordEncoder.encode(password));
             // send a welcome message
-//            SendEmailDto sendEmailDto = new SendEmailDto();
-//            sendEmailDto.setEmail("Thanks for signing up");
-//            sendEmailDto.setSubject("Welcome to Platform->");
-//            sendEmailDto.setTo(email);
-//            sendEmailDto.setFrom("r.bitan");
-//            kafkaProducerClient.sendMessage("send_email", objectMapper.writeValueAsString(sendEmailDto));
+            SendEmailDto sendEmailDto = new SendEmailDto();
+            sendEmailDto.setEmail("Thanks for signing up");
+            sendEmailDto.setSubject("Welcome to Platform->");
+            sendEmailDto.setTo(email);
+            sendEmailDto.setFrom("r.bitan");
+
+            kafkaProducerClient.sendMessage("send_email", objectMapper.writeValueAsString(sendEmailDto));
+            System.out.println(sendEmailDto.toString());
             userRepository.save(newUser);
             return newUser;
         }
